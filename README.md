@@ -1,5 +1,9 @@
 # Akkadict
-Akkadian dictionary Webapp written in C# with procedural noun inflection (and later verb declensions), put together for nwhacks 2019.
+Akkadian dictionary Webapp written in C# with procedural noun inflection (and later verb declensions)
+
+Made during nwHacks 2019 in order to learn BLazor and keep myself from failing my Akkadian course.
+
+Inflection generation is very barebones and doesn't take phonological changes into account.
 
 Uses Blazor, so install that and do `dotnet run` or `dotnet watch run`.
 
