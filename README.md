@@ -7,4 +7,4 @@ Inflection generation is very barebones and doesn't take phonological changes in
 
 Uses Blazor, so install that and do `dotnet run` or `dotnet watch run`.
 
-![screenshot](https://i.imgur.com/6V0huhs.png)
+![screenshot](https://i.imgur.com/XjMMEm3.png)

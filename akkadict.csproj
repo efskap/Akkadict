@@ -19,5 +19,11 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+<ItemGroup>
+    <!-- extends watching group to include various files -->
+    <Watch Include="**\*.cshtml"/>
+    <Watch Include="**\*.css"/>
+    <Watch Include="**\*.htmll"/>
 
+</ItemGroup>
 </Project>

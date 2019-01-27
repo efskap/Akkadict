@@ -13,40 +13,35 @@
 }
 else
 {
-<p>Filter:</p><input type="text" bind="@FilterQuery" oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" /> <br/>
+<p>Filter: <input type="text" bind="@FilterQuery" oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" /> </p>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Word</th>
-                <th>Declension</th>
-                <th>Meaning</th>
-                <th>PoS</th>
-                <th>Gender</th>
-                <th>Chapter</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var word in words.Where(FilterPred))
-            {
-                <tr>
-                    <td>@word.Text</td>
-					<td>
-					<ul class="declension">
-					@foreach (var (dec, text) in word.Decline())
-					{
-						<li>@dec - @text</li>
-					}
-					</ul>
-					</td>
-                    <td>@word.Meaning</td>
-                    <td>@word.PoS</td>
-                    <td>@word.NounGender</td>
-                    <td>@word.Chapter</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Word</th>
+            <th>Declension</th>
+            <th>Meaning</th>
+            <th>PoS</th>
+            <th>Gender</th>
+            <th>Chapter</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var word in words.Where(FilterPred))
+        {
+        <tr>
+            <td>@word.Text</td>
+            <td>
+                <DeclensionBox word="@word"/>
+            </td>
+            <td>@word.Meaning</td>
+            <td>@word.PoS</td>
+            <td>@word.NounGender</td>
+            <td>@word.Chapter</td>
+        </tr>
+        }
+    </tbody>
+</table>
 }
 
 @functions {
@@ -68,6 +63,4 @@ List<Word> words = new List<Word>();
             }
         }
     }
-        
-
 }

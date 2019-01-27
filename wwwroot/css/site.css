@@ -1,10 +1,24 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-        font-family: sans-serif;
 }
 
-
+.togglevis{
+    font-size: small;
+    width: 100%;
+    line-height: 1.1;
+    color: #88b;
+}
+.table td {
+    padding: .4rem;
+}
+.table {
+    table-layout:fixed;
+}
+table.declension {
+	width: 100%;
+    text-align: center; 
+}
 
 app {
     position: relative;
