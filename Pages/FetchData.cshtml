@@ -1,0 +1,73 @@
+﻿@page "/fetchdata"
+@inject HttpClient Http
+@using CsvHelper
+@using System.IO
+@using System.Linq
+
+<h1>Akkadict</h1>
+<h3><i>Bringing a 3000 BC language to 3000 AD.</i></h3>
+
+@if (words.Count == 0)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<p>Filter:</p><input type="text" bind="@FilterQuery" oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" /> <br/>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Word</th>
+                <th>Declension</th>
+                <th>Meaning</th>
+                <th>PoS</th>
+                <th>Gender</th>
+                <th>Chapter</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var word in words.Where(FilterPred))
+            {
+                <tr>
+                    <td>@word.Text</td>
+					<td>
+					<ul class="declension">
+					@foreach (var (dec, text) in word.Decline())
+					{
+						<li>@dec - @text</li>
+					}
+					</ul>
+					</td>
+                    <td>@word.Meaning</td>
+                    <td>@word.PoS</td>
+                    <td>@word.NounGender</td>
+                    <td>@word.Chapter</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+List<Word> words = new List<Word>();
+    string FilterQuery = "";
+
+
+    bool FilterPred(Word w) {
+        return w.Text.ToLower().Contains(FilterQuery.ToLower()) || w.Meaning.ToLower().Contains(FilterQuery.ToLower());
+    }
+    protected override async Task OnInitAsync()
+    {
+        words = new List<Word>();
+        var cvsdata = await Http.GetStringAsync("https://docs.google.com/spreadsheets/d/1zrWkaay9bhqr_c2gZm9MLQ_j2dMVtM5ZZvQJlpq4jlQ/export?format=csv&id=1zrWkaay9bhqr_c2gZm9MLQ_j2dMVtM5ZZvQJlpq4jlQ&gid=0");
+        using (var reader = new StringReader(cvsdata)) {
+            using (var csv = new CsvReader(reader))
+            {
+                words = csv.GetRecords<Word>().ToList();
+            }
+        }
+    }
+        
+
+}
