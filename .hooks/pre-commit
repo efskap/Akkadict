@@ -1,0 +1,5 @@
+#!/bin/sh
+
+dotnet publish -c release -o $(git rev-parse --show-toplevel)/dist
+git add $(git rev-parse --show-toplevel)/dist
+exit 0
