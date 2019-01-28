@@ -1,0 +1,20 @@
+<button class="btn btn-light togglevis" onclick="@toggle">@if (hidden)
+    { <span class="oi oi-chevron-bottom"></span> } else { <span class="oi oi-chevron-top"></span> }</button>
+<table class="declension" hidden=@hidden>
+    @foreach (var (dec, text) in word.Decline())
+    {
+    <tr>
+        <td>@dec</td>
+        <td>@text</td>
+    </tr>
+    }
+</table>
+@functions
+{
+[Parameter]
+private Word word {get; set;}
+private void toggle() {
+    hidden = !hidden;
+}
+private bool hidden = true;
+}
