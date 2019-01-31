@@ -14,16 +14,20 @@
 
     <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.7.0" />
 
-    <PackageReference Include="MoreLinq.Source.MoreEnumerable.GroupAdjacent" Version="1.0.2">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="NUnit" Version="3.11.0" />
   </ItemGroup>
 <ItemGroup>
     <!-- extends watching group to include various files -->
-    <Watch Include="**\*.cshtml"/>
-    <Watch Include="**\*.css"/>
-    <Watch Include="**\*.htmll"/>
+    <Watch Include="**\*.cshtml" />
+    <Watch Include="**\*.css" />
+    <Watch Include="**\*.htmll" />
 
+</ItemGroup>
+<ItemGroup>
+  <Compile Remove="Tests\**" />
+  <Content Remove="Tests\**" />
+  <EmbeddedResource Remove="Tests\**" />
+  <None Remove="Tests\**" />
+  <Watch Remove="Tests\**" />
 </ItemGroup>
 </Project>

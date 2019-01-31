@@ -1,4 +1,4 @@
 static class Constants {
-    public const string MACRON = "\u0304";
-    public const string CIRCUMFLEX = "\u0302";
+    public const char MACRON = '\u0304';
+    public const char CIRCUMFLEX = '\u0302';
 }

@@ -3,6 +3,7 @@
 @using CsvHelper
 @using System.IO
 @using System.Linq
+@using System.Globalization
 
 <h1>Akkadict</h1>
 <h3><i>Bringing a 3000 BC language to 3000 AD.</i></h3>
@@ -13,6 +14,10 @@
 }
 else
 {
+    <div class="alert alert-warning" role="alert">
+        <span class="oi oi-bug"></span> &lt; &nbsp; 
+Declensions not guaranteed to be correct. <b>Tons</b> of phonological rules are missing.
+    </div>
 <p>Filter: <input type="text" bind="@FilterQuery" oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" /> </p>
 
 <table class="table">
@@ -30,7 +35,7 @@ else
         @foreach (var word in words.Where(FilterPred))
         {
         <tr>
-            <td>@word.Text</td>
+            <td>@word.Headword</td>
             <td>
                 <DeclensionBox word="@word"/>
             </td>
@@ -45,12 +50,27 @@ else
 }
 
 @functions {
-List<Word> words = new List<Word>();
+    List<Word> words = new List<Word>();
     string FilterQuery = "";
 
 
     bool FilterPred(Word w) {
-        return w.Text.ToLower().Contains(FilterQuery.ToLower()) || w.Meaning.ToLower().Contains(FilterQuery.ToLower());
+        // TODO: have list of searchable strings
+        foreach (string _haystack in w.Decline().Select(p=>p.Item2).Concat(new [] { w.Meaning,   }))
+        {
+            string haystack = _haystack;
+            var normquery = Word.Norm(FilterQuery);
+            // only ascii chars in search => match ascii chars in fields
+            if (!normquery.Any(c => CharUnicodeInfo.GetUnicodeCategory(c) == UnicodeCategory.NonSpacingMark))
+            {
+                haystack = Word.ASCIIfy(haystack.ToLower());
+               
+            }
+
+            if (haystack.Contains(normquery))
+                return true;
+        }
+        return false;
     }
     protected override async Task OnInitAsync()
     {
@@ -60,6 +80,9 @@ List<Word> words = new List<Word>();
             using (var csv = new CsvReader(reader))
             {
                 words = csv.GetRecords<Word>().ToList();
+                foreach (var word in words) {
+                    Console.WriteLine(word.Headword);
+                }
             }
         }
     }

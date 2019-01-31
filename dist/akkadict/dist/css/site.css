@@ -2,6 +2,10 @@
 
 html, body {
 }
+body{
+
+    background-image: linear-gradient(10deg, #795548 0%, #7947ac 140%);
+}
 
 .togglevis{
     font-size: small;
@@ -33,7 +37,11 @@ app {
 }
 
 .main {
-    flex: 1;
+    /*flex: 1;*/
+    background: #eee;
+    width: 75%;
+    margin: 5em auto;
+    padding:1em;
 }
 
     .main .top-row {
@@ -42,7 +50,8 @@ app {
     }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    box-shadow: -66px 0px 200px -90px #7f2d23 inset;
+    background-image: linear-gradient(10deg, #795548 0%, #7947ac 140%);
 }
 
     .sidebar .top-row {
